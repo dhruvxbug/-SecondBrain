@@ -1,0 +1,39 @@
+@import "tailwindcss";
+:root {
+	--balgio-font: 'Balgio', sans-serif;
+	--humane-medium-font: 'Humane Medium', sans-serif;
+	--humane-regular-font: 'Humane Regular', sans-serif;
+}
+
+@font-face {
+	font-family: 'Balgio';
+	src: url('./fonts/balgio/Balgio.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Humane Medium';
+	src: url('./fonts/OpenType-PS/Humane-Medium.otf') format('opentype');
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Humane Regular';
+	src: url('./fonts/OpenType-PS/Humane-Regular.otf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+.balgio, .balgio-font {
+	font-family: var(--balgio-font), sans-serif;
+}
+
+.humane-medium, .humane-medium-font {
+	font-family: var(--humane-medium-font), sans-serif;
+}
+
+.humane-regular, .humane-regular-font {
+	font-family: var(--humane-regular-font), sans-serif;
+}
