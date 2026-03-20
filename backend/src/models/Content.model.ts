@@ -1,20 +1,6 @@
-import mongoose, {model,Schema} from 'mongoose';
+import mongoose, { Schema, model } from "mongoose";
 const ObjectId = Schema.ObjectId;
-
-const UserSchema = new Schema({
-    UserName: { type: String, unique: true, min:3, required: true},
-    Password: { type: String, unique: true, min:3, required: true},
-    Profile: {
-        FirstName: { type: String, required: true},
-        LastName: { type: String, required: true},
-        Avatar: String,
-        bio: String,
-        Socials: {
-            Github: String,
-            LinkedIn: String
-        }
-    }
-})
+import {UserModel} from "./User.model.js"
 
 const contentTypes = ['images','video','audio','article'];
 
@@ -44,6 +30,5 @@ const LinkSchema = new Schema({
 })
 
 export const TagModel = model('Tag', TagSchema);
-export const UserModel = model('User', UserSchema);
 export const LinkModel = model('Link', LinkSchema);
 export const ContentModel = model('Content', ContentSchema);
