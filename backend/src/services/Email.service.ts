@@ -23,7 +23,7 @@ transporter.verify((error, success) => {
 export const sendEmail = async(to: string, subject: string,text: string, html: string) => {
   try{
         const info = await transporter.sendMail({
-        from: '"Second Brain" <reanna.bogisich@ethereal.email>',
+        from: '"Second Brain"',
         to: to,
         subject: subject,
         text: text, // Plain-text version of the message
@@ -32,7 +32,7 @@ export const sendEmail = async(to: string, subject: string,text: string, html: s
 
       console.log("Message sent:", info.messageId);
       console.log("Preview URL:", nodemailer.getTestMessageUrl(info));
-      
+
   } catch (error){
     console.log(error);
   }

@@ -13,7 +13,12 @@ const OTPSchema = new Schema({
     },
     otpHash: {
         type: String,
-        required: true
-    }} ,{ timestamps: true })
+        required: true 
+    }, 
+    createdAt:{
+      type: Date,
+      default: Date.now,
+      expires: 3600
+    } } ,{ timestamps: true })
 
 export const OTPmodel = model('OTP', OTPSchema);

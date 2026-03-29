@@ -15,7 +15,7 @@ export async function signup(req: Request,res: Response, next: NextFunction){
             const requiredBody  = z.object ({
             username: z.string().min(3).trim().max(10),
             password: z.string().trim().min(8,"Password must be at least 8 characters").max(20, "Password can't exceed 20 characters").regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,"Password must contain at least one letter and one number and one special character"),
-            email: z.string().email("Invalid email format").trim(),
+            email: z.email("Invalid email format").trim(),
             firstName: z.string().trim().min(3),
             lastName: z.string().trim().min(3),
             avatar: z.string().trim().optional(),
@@ -97,6 +97,55 @@ export async function signup(req: Request,res: Response, next: NextFunction){
                 })
             }
         }
+}
+
+export async function sendOtpAgain(req:Request, res:Response, next: NextFunction){
+    try{
+        const {email} = req.body;
+
+        if(!email){
+            return res.json({
+                message: "Email not found"
+            })
+        }
+
+        const user = await UserModel.findOne({
+            Email : email
+        })
+
+        if(!user){
+            return res.json({
+                message: "User not found"
+            })
+        }
+    
+        const otp = generateOTP();
+        const html = getOTPhtml(otp);
+
+         const otpHash = await bcrypt.hash(otp, 5);
+        await OTPmodel.create({
+            email,
+            UserId: user._id,
+            otpHash
+        })
+
+        await (sendEmail as unknown as (to: string, subject: string, text: string, html: string) => Promise<void>)(email, "OTP verification", `Your OTP code is ${otp}` , html);
+        
+         res.status(200).json({
+            message: "OTP sent"
+        })
+
+    } catch(e){
+        if(e instanceof Error){
+                res.status(500).json({
+                    error: e.message
+                }) 
+            } else{
+                res.status(500).json({
+                    error: String(e)
+                })
+            }
+    }
 }
 
 export async function verifyEmail(req: Request, res: Response, next: NextFunction){
@@ -222,188 +271,6 @@ export async function signin(req: Request,res: Response, next: NextFunction){
         }
 }
 
-export async function postUserContent(req: Request,res: Response, next: NextFunction){
-     try{
-       const { title, link, type, tags } = req.body;
-       const userId = req.userId;
-    
-       if(!userId){
-        res.json({
-            message:"error in userId"
-        })
-       }
-    
-       const UserContent = await ContentModel.create({
-        Title: title,
-        Link: link,
-        Tags: [],
-        Type: type,
-        userId: new mongoose.Types.ObjectId(userId)
-       })
-    
-       res.json({
-        message: "Content created"
-       }) 
-       } catch(e){
-          if(e instanceof Error){
-                res.status(500).json({
-                    error: e.message
-                }) 
-            } else{
-                res.status(500).json({
-                    error: String(e)
-                })
-            }
-       }
-}
-
-export async function getUserContent(req: Request,res: Response, next: NextFunction){
-    try{
-         const userId = req.userId;
-    
-         const content = await ContentModel.findOne({
-            userId: new mongoose.Types.ObjectId(userId)
-         })
-    
-         res.json({
-            content
-         })
-       } catch(e){
-          if(e instanceof Error){
-                res.status(500).json({
-                    error: e.message
-                }) 
-            } else{
-                res.status(500).json({
-                    error: String(e)
-                })
-            }
-       }
-}
-
-export async function deleteUserContent(req: Request,res: Response, next: NextFunction){
-     try{
-         const contentId = req.body.contentId
-    
-         const content = await ContentModel.deleteMany({
-           _id: contentId,
-           userId:  new mongoose.Types.ObjectId(req.userId)
-         })
-    
-         res.status(200).json({
-            message: "deleted content"
-         })
-       } catch(e){
-          if(e instanceof Error){
-                res.status(500).json({
-                    error: e.message
-                }) 
-            } else{
-                res.status(500).json({
-                    error: String(e)
-                })
-            }
-       }
-}
-
-export async function generateShareLink(req: Request,res: Response, next: NextFunction){
-    try{
-         const share = req.body.share;
-    
-         if(share){
-            const CheckExistingUserLink = await LinkModel.findOne({
-                userId: new mongoose.Types.ObjectId(req.userId)
-            })
-            if(CheckExistingUserLink){
-                return res.json({
-                    hash: CheckExistingUserLink.hash
-                })
-            } 
-             const hash = random(10);
-                await LinkModel.create({
-                    hash: hash,
-                    userId:  new mongoose.Types.ObjectId(req.userId)
-                })
-            res.json({
-                hash
-            })
-         } else{
-            await LinkModel.deleteOne({
-                userId: new mongoose.Types.ObjectId(req.userId)
-            })
-    
-            res.json({
-                message:'link removed'
-            })
-         }
-    
-         res.status(200).json({
-            message: "deleted content"
-         })
-       } catch(e){
-          if(e instanceof Error){
-                res.status(500).json({
-                    error: e.message
-                }) 
-            } else{
-                res.status(500).json({
-                    error: String(e)
-                })
-            }
-       }
-}
-
-export async function userShareLink(req: Request,res: Response, next: NextFunction){
-    try{
-     const shareLink = req.params.shareLink;
-
-     if(!shareLink){
-        return res.json({
-            message: "Wrong shareLink format"
-        })
-     }
-
-     const hashLink = await LinkModel.findOne({
-       hash: shareLink
-     })
-     
-     if(!hashLink){
-        return res.status(404).json({
-            message: "Invalid link"
-        })
-     }
-     const userId = hashLink?.userId;
-     const content = await ContentModel.find({
-        userId: userId
-     })
-     const userDetails = await UserModel.findOne({
-        _id: userId
-     })
-
-      if (!userDetails) {
-        return res.status(411).json({
-            msg: "User not found"
-        })
-    }
-     const username = userDetails.UserName;
-
-     res.status(200).json({
-        username,
-        content
-     })
-
-   } catch(e){
-      if(e instanceof Error){
-            res.status(500).json({
-                error: e.message
-            }) 
-        } else{
-            res.status(500).json({
-                error: String(e)
-            })
-        }
-   }
-}
 
 
 // Auth flow (slightly complex)
