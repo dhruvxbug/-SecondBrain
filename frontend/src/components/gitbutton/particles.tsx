@@ -3,12 +3,12 @@
 import * as React from 'react';
 import { motion, AnimatePresence, type HTMLMotionProps } from 'motion/react';
 
-import { Slot, type WithAsChild } from '../../../../components/animate-ui/primitives/animate/slot';
+import { Slot, type WithAsChild } from './slot';
 import {
   useIsInView,
   type UseIsInViewOptions,
-} from '../../../../hooks/use-is-in-view';
-import { getStrictContext } from '../../../../lib/get-strict-context';
+} from '../../hooks/use-is-in-view';
+import { getStrictContext } from '../../lib/get-strict-context';
 
 type Side = 'top' | 'bottom' | 'left' | 'right';
 type Align = 'start' | 'center' | 'end';

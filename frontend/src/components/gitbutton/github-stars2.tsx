@@ -6,19 +6,19 @@ import { motion, type HTMLMotionProps } from 'motion/react';
 import {
   useIsInView,
   type UseIsInViewOptions,
-} from '../../../../hooks/use-is-in-view';
-import { getStrictContext } from '../../../../lib/get-strict-context';
-import { Slot, type WithAsChild } from '../../../../components/animate-ui/primitives/animate/slot';
+} from '../../hooks/use-is-in-view';
+import { getStrictContext } from '../../lib/get-strict-context';
+import { Slot, type WithAsChild } from './slot';
 import {
   SlidingNumber,
   type SlidingNumberProps,
-} from '../../../../components/animate-ui/primitives/texts/sliding-number';
+} from './sliding-number';
 import {
   Particles,
   ParticlesEffect,
   type ParticlesEffectProps,
-} from '../../../../components/animate-ui/primitives/effects/particles';
-import { cn } from '../../../../lib/utils';
+} from './particles';
+import { cn } from '../../lib/utils';
 
 type GithubStarsContextType = {
   stars: number;

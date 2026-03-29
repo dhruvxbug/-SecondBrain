@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { motion, type HTMLMotionProps } from 'motion/react';
 
-import { Slot, type WithAsChild } from '../animate/slot';
+import { Slot, type WithAsChild } from './slot';
 
 type ButtonProps = WithAsChild<
   HTMLMotionProps<'button'> & {

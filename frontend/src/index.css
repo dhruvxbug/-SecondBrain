@@ -3,6 +3,7 @@
 	--balgio-font: 'Balgio', sans-serif;
 	--humane-medium-font: 'Humane Medium', sans-serif;
 	--humane-regular-font: 'Humane Regular', sans-serif;
+  --humane-bold-font: 'Humane Bold', sans-serif;
 }
 
 @font-face {
@@ -26,6 +27,13 @@
 	font-style: normal;
 }
 
+@font-face {
+  font-family: 'Humane Bold';
+  src: url('./fonts/OpenType-PS/Humane-Bold.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 .balgio, .balgio-font {
 	font-family: var(--balgio-font), sans-serif;
 }
@@ -36,4 +44,8 @@
 
 .humane-regular, .humane-regular-font {
 	font-family: var(--humane-regular-font), sans-serif;
+}
+
+.humane-bold, .humane-bold-font {
+  font-family: var(--humane-bold-font), sans-serif;
 }

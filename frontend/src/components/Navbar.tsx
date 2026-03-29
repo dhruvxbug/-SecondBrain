@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import JoinNowButton from './JoinNowButton';
-import { GitHubStarsButton } from './animate-ui/components/buttons/github-stars';
+import { GitHubStarsButton } from './gitbutton/github-stars';
 
 export default function Navbar() {
   const [visible, setVisible] = useState(false);
@@ -24,7 +24,7 @@ export default function Navbar() {
       style={{ minWidth: 1100, maxWidth: 1200 }}
     >
       {/* Left: Name */}
-      <span className="text-white text-[1.5rem] font-bold">2nd Brain</span>
+      <span className="text-white text-[2.25rem] humane-regular">S E C O N D   B R A I N.</span>
       {/* Center: Nav Links */}
       <div className="flex-1 flex justify-center">
         <ul className="flex gap-8 text-white text-lg font-medium">
