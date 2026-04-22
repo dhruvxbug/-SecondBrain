@@ -16,36 +16,6 @@ Second Brain is an AI-powered bookmarking and thought management app that levera
 - Vector Database for embeddings
 - Tailwind CSS for styling
 
-## Getting Started
-
-### Prerequisites
-- Node.js (v18+ recommended)
-- npm or yarn
-- MongoDB running locally or remotely
-
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/dhruvxbug/-SecondBrain.git
-   cd -SecondBrain
-   ```
-2. Install dependencies for frontend and backend:
-   ```bash
-   cd frontend && npm install
-   cd ../backend && npm install
-   ```
-3. Start the backend:
-   ```bash
-   cd backend
-   npm run build
-   npm run dev
-   ```
-4. Start the frontend:
-   ```bash
-   cd ../frontend
-   npm run dev
-   ```
-
 ## Project Structure
 ```
 - backend/
@@ -55,3 +25,12 @@ Second Brain is an AI-powered bookmarking and thought management app that levera
 ## License
 MIT
 
+## Star History
+
+<a href="https://www.star-history.com/?repos=dhruvxbug%2F-SecondBrain&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=dhruvxbug/-SecondBrain&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=dhruvxbug/-SecondBrain&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=dhruvxbug/-SecondBrain&type=date&legend=top-left" />
+ </picture>
+</a>
